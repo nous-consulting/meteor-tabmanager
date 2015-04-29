@@ -1,13 +1,9 @@
 Package.describe({
   name: 'nous:tabmanager',
-  version: '0.1.1',
-  // Brief, one-line summary of the package.
-  summary: 'Virtual (browser like) tabs manager.',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
-  documentation: 'README.md'
+  version: '0.2',
+  summary: 'Virtual (browser like) tabs manager for Meteor apps.',
+  git: 'https://github.com/nous-consulting/meteor-tabmanager',
+  documentation: null
 });
 
 Package.onUse(function(api) {
