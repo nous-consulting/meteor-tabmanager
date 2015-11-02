@@ -1,6 +1,6 @@
 Package.describe({
   name: 'nous:tabmanager',
-  version: '0.2.1',
+  version: '0.2.2',
   summary: 'Virtual (browser like) tabs manager for Meteor apps.',
   git: 'https://github.com/nous-consulting/meteor-tabmanager',
   documentation: 'README.md'

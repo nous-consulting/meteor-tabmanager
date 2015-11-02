@@ -9,7 +9,7 @@ class TabManager
     @registeredTemplates = []
 
   registerTemplate: (name) ->
-    unless name and name in @registeredTemplates
+    if name and name not in @registeredTemplates
       @registeredTemplates.push name
 
       collection = @collection
@@ -26,7 +26,7 @@ class TabManager
       # Register hook which will restore saved state from database.
       Template[name].onStateRequested ->
         key = getKey()
-        collection.findOne(key).state
+        collection.findOne(key)?.state
 
   createTab: (template_name, title) ->
     url = Iron.Location.get().path
@@ -44,4 +44,3 @@ class TabManager
     @registerTemplate template_name
 
   getIcon: (route) -> @icons[route] ? 'fa-file'
-
