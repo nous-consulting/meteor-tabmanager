@@ -11,4 +11,7 @@ Template.openTabs.events
     tabManager = Template.parentData(0).tabManager
     tabManager.removeTab(@_id)
     if @url is Session.get 'currentTab'
-      FlowRouter.go tabManager.lastVisitedTab()
+      if FlowRouter
+        FlowRouter.go tabManager.lastVisitedTab()
+      else
+        Router.go tabManager.lastVisitedTab()
