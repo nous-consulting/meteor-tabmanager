@@ -13,7 +13,7 @@ Package.onUse(function(api) {
   api.use('coffeescript');
   api.use('reactive-var');
   api.use('nous:state@0.7.0');
-  api.use('nous:utils-and-helpers');
+  api.use('nous:utils-and-helpers@0.4.3');
   api.addFiles([
     'client/open-tabs.html',
     'client/open-tabs.coffee'
