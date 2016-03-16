@@ -4,6 +4,14 @@ if Meteor.isClient
   Template.registerHelper "isDefaultTab", (url) -> url in defaultTabUrls
 
 
+last_visited_tabs = ReactiveVar []
+visitTab = (url) ->
+  tabs = last_visited_tabs.get()
+  if url in tabs
+    tabs.remove(url)
+  tabs.push url
+  last_visited_tabs.set tabs
+
 class TabManager
   constructor: (@collection, @icons) ->
     @registeredTemplates = []
@@ -36,6 +44,7 @@ class TabManager
     else
       url = Iron.Location.get().path
     Session.set 'currentTab', url
+    visitTab(url)
 
     key = "#{Meteor.userId()}:#{url}"
     if @collection.find(key).count() is 0
@@ -46,5 +55,17 @@ class TabManager
         route: template_name
 
     @registerTemplate template_name
+
+  removeTab: (id) ->
+    visited_tabs = last_visited_tabs.get()
+    tab = @collection.findOne(id)
+    if tab
+      @collection.remove id
+      visited_tabs.remove tab.url
+      last_visited_tabs.set visited_tabs
+
+  lastVisitedTab: ->
+    tabs = last_visited_tabs.get()
+    tabs[tabs.length - 1]
 
   getIcon: (route) -> @icons[route] ? 'fa-file'
