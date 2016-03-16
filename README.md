@@ -32,6 +32,19 @@ Router.onBeforeAction( function() {
 
 Now you have Tabs colletion where you have stored tabs and states.
 
+In your template you can use `openTabs` template and provide there you tabManager. Put it inside `<ul>`:
+
+```Html
+<template name="my_header">
+  ...
+  <ul>
+  {{> openTabs tabManager=tabManager}}
+  </ul>
+  ...
+</template>
+```
+
+
 ## Example
 
 ### Template
@@ -49,21 +62,14 @@ template(name="header")
         span.icon-bar
     .navbar-collapse.collapse
       ul.nav.navbar-nav
-        each tabs
-          unless isDefaultTab url
-            li(class=state)
-              a(href=url)
-                i.fa(class=icon)
-                span= title
+        +openTabs tabManager=tabManager
 ```
 
 ### Helpers
 ```JavaScript
 Template.header.helpers({
-  tabs: function () {
-    Tabs.find().map(function (tab) {
-      tab.icon = tabManager.getIcon(tab.route);
-    });
+  tabManager: function () {
+    return tabManager
   }
 });
 ```

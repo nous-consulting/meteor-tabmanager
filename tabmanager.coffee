@@ -1,8 +1,8 @@
 defaultTabUrls = ['/', '/orders', '/directory', '/suppliers']
 
-
 if Meteor.isClient
   Template.registerHelper "isDefaultTab", (url) -> url in defaultTabUrls
+
 
 class TabManager
   constructor: (@collection, @icons) ->
@@ -11,10 +11,12 @@ class TabManager
   registerTemplate: (name) ->
     if name and name not in @registeredTemplates
       @registeredTemplates.push name
-
       collection = @collection
       getKey = ->
-        url = Iron.Location.get().path
+        if FlowRouter
+          url = FlowRouter.current().path
+        else
+          url = Iron.Location.get().path
         key = "#{Meteor.userId()}:#{url}"
 
       # Register hook which will save state into database each time it will change.
@@ -29,12 +31,14 @@ class TabManager
         collection.findOne(key)?.state
 
   createTab: (template_name, title) ->
-    url = Iron.Location.get().path
+    if FlowRouter
+      url = FlowRouter.current().path
+    else
+      url = Iron.Location.get().path
     Session.set 'currentTab', url
 
     key = "#{Meteor.userId()}:#{url}"
     if @collection.find(key).count() is 0
-      # XXX Is it the best way to set tab's title? How about changing client/suppliers names?
       @collection.insert
         _id: key
         url: url

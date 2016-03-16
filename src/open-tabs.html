@@ -1,0 +1,15 @@
+<template name="openTabs">
+  {{#each tabs tabManager}}
+    {{#unless isDefaultTab url}}
+      <li class="{{state}} tab">
+        <a href="{{url}}">
+          <i class="fa {{icon}}"></i>
+          <span>{{title}}</span>
+        </a>
+        <a href="#" class="close-tab">
+          <i class="fa fa-times-circle"></i>
+        </a>
+      </li>
+    {{/unless}}
+  {{/each}}
+</template>
